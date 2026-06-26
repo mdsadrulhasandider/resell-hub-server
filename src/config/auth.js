@@ -15,6 +15,7 @@ export const auth = betterAuth({
     }
   }),
   secret: process.env.BETTER_AUTH_SECRET || "a-super-secret-key-of-at-least-32-chars-length",
+  baseURL: process.env.BETTER_AUTH_URL || "http://localhost:5000",
   emailAndPassword: {
     enabled: true
   },

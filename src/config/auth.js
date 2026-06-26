@@ -29,6 +29,7 @@ export const auth = betterAuth({
     useSecureCookies: true
   },
   cookie: {
+    secure: true, // Required for sameSite: "none" in production (HTTPS)
     sameSite: "none"
   },
   user: {

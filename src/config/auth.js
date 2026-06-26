@@ -24,6 +24,10 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "placeholder"
     }
   },
+  advanced: {
+    crossSubDomainCookie: true,
+    useSecureCookies: true // Force secure cookies in production environments
+  },
   user: {
     additionalFields: {
       role: {

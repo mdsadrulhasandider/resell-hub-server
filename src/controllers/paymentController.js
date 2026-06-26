@@ -16,6 +16,8 @@ export const createCheckoutSession = async (req, res, next) => {
       return res.status(404).json({ success: false, message: "Product not found" });
     }
 
+    const clientUrl = process.env.CLIENT_URL || 'http://localhost:5173';
+    
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
@@ -32,8 +34,8 @@ export const createCheckoutSession = async (req, res, next) => {
         },
       ],
       mode: 'payment',
-      success_url: `http://localhost:5173/dashboard/buyer/my-orders?payment_success=true&session_id={CHECKOUT_SESSION_ID}&product_id=${productId}&order_id=${orderId || ''}&buyer_id=${buyerId || ''}`,
-      cancel_url: `http://localhost:5173/products/${productId}?payment_cancelled=true`,
+      success_url: `${clientUrl}/dashboard/buyer/my-orders?payment_success=true&session_id={CHECKOUT_SESSION_ID}&product_id=${productId}&order_id=${orderId || ''}&buyer_id=${buyerId || ''}`,
+      cancel_url: `${clientUrl}/products/${productId}?payment_cancelled=true`,
       metadata: {
         productId,
         buyerId: buyerId || '',

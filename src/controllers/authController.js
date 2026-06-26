@@ -1,6 +1,7 @@
 import { auth } from '../config/auth.js';
 import { fromNodeHeaders } from 'better-auth/node';
 import jwt from 'jsonwebtoken';
+import { getUserCollection } from '../models/User.js';
 
 export const register = async (req, res, next) => {
   try {
@@ -52,9 +53,15 @@ export const generateJWT = async (req, res, next) => {
       return res.status(401).json({ message: "unauthorized access" });
     }
     
-    const user = session.user;
+    const sessionUser = session.user;
+
+    // Fetch fresh user data from DB so role changes reflect immediately
+    const userCollection = getUserCollection();
+    const freshUser = await userCollection.findOne({ email: sessionUser.email });
+    const role = freshUser?.role || sessionUser.role || 'buyer';
+
     const token = jwt.sign(
-      { id: user.id || user._id, email: user.email, role: user.role }, 
+      { id: sessionUser.id || sessionUser._id, email: sessionUser.email, role }, 
       process.env.JWT_SECRET || "super_secret_jwt_key_at_least_32_characters_long", 
       { expiresIn: '7d' }
     );

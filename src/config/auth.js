@@ -25,8 +25,10 @@ export const auth = betterAuth({
     }
   },
   advanced: {
-    crossSubDomainCookie: true,
-    useSecureCookies: true // Force secure cookies in production environments
+    useSecureCookies: true
+  },
+  cookie: {
+    sameSite: "none"
   },
   user: {
     additionalFields: {

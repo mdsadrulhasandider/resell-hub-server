@@ -7,7 +7,6 @@ dotenv.config();
 
 export const auth = betterAuth({
   database: mongodbAdapter(getDb(), {
-    client,
     collectionNames: {
       user: "users",
       session: "sessions",
@@ -60,6 +59,8 @@ export const auth = betterAuth({
   // Set trusted origins to allow credential-based requests from frontend
   trustedOrigins: [
     "http://localhost:5173",
-    "http://127.0.0.1:5173"
+    "http://127.0.0.1:5173",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000"
   ]
 });

@@ -4,8 +4,10 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const uri = process.env.DB_URI || `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.mongodb.net/?retryWrites=true&w=majority`;
+console.log("DB_URI being used:", uri);
 
 export const client = new MongoClient(uri, {
+  retryWrites: false,
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,

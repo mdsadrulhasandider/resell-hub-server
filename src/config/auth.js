@@ -26,7 +26,8 @@ export const auth = betterAuth({
     }
   },
   advanced: {
-    useSecureCookies: true
+    useSecureCookies: true,
+    disableCookieCache: true // Bypasses browser cache validations during cross-domain authentication
   },
   cookie: {
     secure: true, // Required for sameSite: "none" in production (HTTPS)

@@ -15,8 +15,16 @@ import paymentRoutes from './routes/paymentRoutes.js';
 const app = express();
 
 // Configure CORS to allow authorization headers and session cookies from client
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'http://localhost:3000',
+  'http://127.0.0.1:3000',
+  process.env.CLIENT_URL, // Production client URL (set in Render env vars)
+].filter(Boolean);
+
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:3000', 'http://127.0.0.1:3000'],
+  origin: allowedOrigins,
   credentials: true
 }));
 
